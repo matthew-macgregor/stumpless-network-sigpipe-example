@@ -7,6 +7,10 @@ project(network-example C)
 add_executable(network-example src/network_example.c)
 
 option(HANDLE_SIGPIPE "Handle SIGPIPE Signal" OFF)
+if( HANDLE_SIGPIPE )
+    add_definitions(-DHANDLE_SIGPIPE)
+endif()
+
 
 target_link_libraries(network-example PUBLIC stumpless)
 

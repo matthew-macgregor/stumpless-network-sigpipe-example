@@ -135,12 +135,14 @@ main( int argc, char **argv ) {
   }
 
 #ifdef HANDLE_SIGPIPE
+  fprintf( stderr, "Setup SIGPIPE Handler\n" );
   // Register a signal handler to listen exclusively for SIGPIPE
   if ( signal( SIGPIPE, signal_handler ) == SIG_ERR ) {
     fprintf (stderr, "Cannot handle SIGPIPE\n" );
     exit (EXIT_FAILURE);
   }
 #else
+  fprintf( stderr, "Ignore SIGPIPE\n" );
   if ( signal( SIGPIPE, SIG_IGN ) == SIG_ERR ) {
     fprintf( stderr, "Cannot handle SIGPIPE\n" );
     exit( EXIT_FAILURE );
