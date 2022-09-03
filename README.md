@@ -12,7 +12,8 @@ target. This example relates to discussion about the behavior of the new
 
 When logging to a network target on \*nix, if the server disconnects a 
 `SIGPIPE` signal will be raised. The default behavior of this signal is to 
-terminate the process. The current recommendation is to ignore the signal.
+terminate the process. The current recommendation is to ignore the signal,
+but this might not be practical for all applications.
 
 ```c
 if ( signal( SIGPIPE, SIG_IGN ) == SIG_ERR ) {
@@ -46,9 +47,13 @@ To build:
 ```sh
 mkdir build
 cd build
-cmake -S . -B build
+cmake -S . -B build -DIGNORE_SIGPIPE=On
 cmake --build build
 ```
+
+Options:
+- `HANDLE_SIGPIPE`: Enables a global signal handler, good for observing the signal behavior.
+- `IGNORE_SIGPIPE`: Disables the SIGPIPE signal globally.
 
 To run both client and server:
 

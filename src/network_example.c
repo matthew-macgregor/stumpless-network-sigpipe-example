@@ -135,13 +135,17 @@ main( int argc, char **argv ) {
   }
 
 #ifdef HANDLE_SIGPIPE
+  // SIGPIPE Global Handler
+  // There are better ways to handle signals, but this example makes
+  // it a little easier to observe the behavior of the signal. Without
+  // the handler, the process will be killed by default.
   fprintf( stderr, "Setup SIGPIPE Handler\n" );
   // Register a signal handler to listen exclusively for SIGPIPE
   if ( signal( SIGPIPE, signal_handler ) == SIG_ERR ) {
     fprintf (stderr, "Cannot handle SIGPIPE\n" );
     exit (EXIT_FAILURE);
   }
-#else
+#elif IGNORE_SIGPIPE
   fprintf( stderr, "Ignore SIGPIPE\n" );
   if ( signal( SIGPIPE, SIG_IGN ) == SIG_ERR ) {
     fprintf( stderr, "Cannot handle SIGPIPE\n" );
@@ -155,6 +159,7 @@ main( int argc, char **argv ) {
     puts( "sending" );
     // sending the entry is just like normal
     log_result = stumpless_add_entry( tcp_target, basic_entry );
+    puts( "done sending" );
     if( log_result < 0 ) {
       stumpless_perror( "could not log an entry" );
       return EXIT_FAILURE;
