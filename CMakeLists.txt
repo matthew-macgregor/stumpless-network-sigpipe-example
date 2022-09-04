@@ -3,6 +3,11 @@ cmake_minimum_required(VERSION 3.10)
 # set the project name
 project(network-example C)
 
+# Need /usr/local/lib on Mac
+link_directories(/usr/local/lib)
+# Need /usr/local/include on Mac
+include_directories(/usr/local/include)
+
 # add the executable
 add_executable(network-example src/network_example.c)
 

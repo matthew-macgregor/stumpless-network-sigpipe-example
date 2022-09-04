@@ -155,19 +155,20 @@ main( int argc, char **argv ) {
 
   // Keep logging until the server breaks the connection, which will
   // raise SIGPIPE on *nix
-  while (1) {
+  while ( 1 ) {
     puts( "sending" );
     // sending the entry is just like normal
     log_result = stumpless_add_entry( tcp_target, basic_entry );
     puts( "done sending" );
+
     if( log_result < 0 ) {
       stumpless_perror( "could not log an entry" );
+      fprintf( stderr, "current strerror: %s\n", strerror(errno) );
       return EXIT_FAILURE;
     } else {
       printf( "log_result: %d\n", log_result );
     }
 
-    fprintf( stderr, "current strerror: %s\n", strerror(errno) );
     sleep(1);
   }
 
